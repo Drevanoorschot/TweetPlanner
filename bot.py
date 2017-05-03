@@ -19,13 +19,22 @@ error = True
 while (error):
     error = False
     tweet = raw_input("What would you like to tweet\n")
-    strdate = raw_input("enter date: (dd-mm-yyyy-hh-mm)\n")
-
     if len(tweet) > 140:
-        print("ERROR: exceeding character tweet limit")
-        print("Current charactercount: " + len(tweet))
+        print("\n***ERROR: exceeding tweet character limit")
+        print("***Current charactercount: " + str(len(tweet)) + "\n")
         error = True
-    date = datetime.datetime.strptime(strdate, "%d-%m-%Y-%H-%M")
-    waittime = date - datetime.datetime.now()
-    time.sleep(waittime.total_seconds())
-    api.update_status(tweet)
+error = True
+while(error):
+    error = False
+    strdate = raw_input("enter date: (dd-mm-yyyy-hh-mm)\n")
+    try:
+        date = datetime.datetime.strptime(strdate, "%d-%m-%Y-%H-%M")
+        if datetime.datetime.now() > date:
+            print("\n***ERROR: date is in the past\n")
+            error = True
+    except ValueError:
+        print("\n***ERROR: couldn't parse date, please provide proper format\n")
+        error = True
+waittime = date - datetime.datetime.now()
+time.sleep(waittime.total_seconds())
+api.update_status(tweet)
