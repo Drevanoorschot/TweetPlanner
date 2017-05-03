@@ -14,7 +14,11 @@ ACCESS_SECRET = configfile[3]#keep the quotes, replace this with your access tok
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
-
+try:
+    print ("tweeting as: " + api.me().name)
+except tweepy.TweepError:
+    print("\n***ERROR: authenciation error, please verify twitterconfig.txt\n")
+    exit()
 error = True
 while (error):
     error = False
